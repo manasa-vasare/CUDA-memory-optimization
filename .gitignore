@@ -1,0 +1,15 @@
+# Executables and build outputs
+*.exe
+*.obj
+*.o
+*.pdb
+*.ilk
+*.exp
+*.lib
+bin/
+
+# Editor / IDE artifacts
+.vscode/
+.vs/
+*.swp
+*~
