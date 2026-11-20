@@ -42,8 +42,8 @@
 - [Laboratory Benchmark Observations](#-laboratory-benchmark-observations)
   - [Observation Table (Section 6)](#observation-table-section-6)
   - [Multi-Run Stability Analysis](#multi-run-stability-analysis)
-  - [Comparison with Reference Baseline (Tesla T4)](#comparison-with-reference-baseline-tesla-t4)
-- [Experimental Output Screenshots](#-experimental-output-screenshots)
+  - [Experimental Output Screenshots](#-experimental-output-screenshots)
+- [Performance Visualizations & Benchmark Graphs](#-performance-visualizations--benchmark-graphs)
 - [Performance Analysis & Discussion](#-performance-analysis--discussion)
 - [Viva-Voce Questions & Comprehensive Answers](#-viva-voce-questions--comprehensive-answers)
 - [Troubleshooting & Diagnostics](#-troubleshooting--diagnostics)
@@ -218,6 +218,10 @@ CUDA-memory-optimization/
 ├── docs/
 │   └── Experiment6_CUDA_Memory_Optimization_Manual.pdf  # Official Lab Manual
 ├── assets/
+│   ├── charts/             # High-resolution benchmark comparison plots
+│   │   ├── transpose_performance_comparison.png
+│   │   ├── multi_run_stability.png
+│   │   └── hardware_comparison_t4_vs_rtx5060ti.png
 │   └── screenshots/        # Diagnostic and execution output logs
 │       ├── setup_terminal.jpeg   # nvcc, nvidia-smi & compilation
 │       ├── run1_benchmark.jpeg   # Benchmark Run 1 output
@@ -344,6 +348,33 @@ As mandated by **Section 4, Step 7** of the laboratory manual, the executable wa
   <img src="assets/screenshots/run3_benchmark.jpeg" alt="Benchmark Run 3 Output" width="85%">
   <br>
   <em><b>Figure 4:</b> Run 3 console output (Transpose Uncoalesced: 0.809 ms / 165.8 GB/s | Coalesced: 0.418 ms / 320.8 GB/s | Speedup: 1.93x | Matmul: 1.511 ms / 1421.4 GFLOPS).</em>
+</p>
+
+---
+
+## 📈 Performance Visualizations & Benchmark Graphs
+
+To visually quantify memory bandwidth scaling, execution stability, and architectural gains over the reference baseline, the experimental benchmark measurements are plotted below:
+
+### 1. Matrix Transpose Performance & Bandwidth Scaling
+<p align="center">
+  <img src="assets/charts/transpose_performance_comparison.png" alt="Matrix Transpose Performance Comparison" width="95%">
+  <br>
+  <em><b>Figure 5:</b> Matrix Transpose execution time ($N=4096$, ms) and effective memory bandwidth ($\text{GB/s}$) on the NVIDIA RTX 5060 Ti across the three stability runs and the mean. Coalesced access delivers a <b>1.92× speedup</b> and increases effective bandwidth from <b>167.6 GB/s to 321.5 GB/s (+91.8% bandwidth utilization)</b>.</em>
+</p>
+
+### 2. Multi-Run Execution Time Stability
+<p align="center">
+  <img src="assets/charts/multi_run_stability.png" alt="Multi-Run Stability Analysis" width="90%">
+  <br>
+  <em><b>Figure 6:</b> Multi-run timing variance across three repeated executions on RTX 5060 Ti. Coalesced transpose execution remained stable at <b>0.418 ms</b> across all repeated runs.</em>
+</p>
+
+### 3. Hardware Generation Scaling: Tesla T4 vs. RTX 5060 Ti
+<p align="center">
+  <img src="assets/charts/hardware_comparison_t4_vs_rtx5060ti.png" alt="Tesla T4 vs RTX 5060 Ti Comparison" width="95%">
+  <br>
+  <em><b>Figure 7:</b> Architectural scaling comparison between the lab manual reference baseline (Tesla T4, Turing CC 7.5) and the observed workstation (RTX 5060 Ti, Blackwell CC 12.0). The RTX 5060 Ti achieves <b>2.32× faster uncoalesced transpose</b>, <b>1.73× faster coalesced transpose</b>, and <b>2.79× higher compute throughput (1534.9 GFLOPS vs. 550.6 GFLOPS)</b>.</em>
 </p>
 
 ---
