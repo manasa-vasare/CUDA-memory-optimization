@@ -177,9 +177,7 @@ The laboratory benchmarks were compiled and evaluated natively on the target hos
 ```text
 CUDA-memory-optimization/
 ├── README.md               # Complete experimental report, analysis & viva answers
-├── build.bat               # Windows build script for Developer Command Prompt
-├── run.bat                 # Benchmark launcher with configurable parameters
-├── Makefile                # Cross-platform build script (Linux / Colab)
+├── exp6.cu                 # Unified CUDA program (Steps 1–5 as in manual)
 ├── .gitignore              # Ignores build artifacts (.exe, .obj, bin/)
 ├── docs/
 │   └── Experiment6_CUDA_Memory_Optimization_Manual.pdf  # Official Lab Manual
@@ -338,40 +336,48 @@ The naive matrix multiplication achieved **$1534.9\text{ GFLOPS}$**. While impre
 
 | Problem | Root Cause | Verified Solution |
 | :--- | :--- | :--- |
-| `nvcc: command not found` | CUDA Toolkit binary directory not in system `PATH`. | Run inside **Visual Studio Developer Command Prompt** or run `build.bat`. |
+| `nvcc: command not found` | CUDA Toolkit not installed or not on system `PATH`. | Ensure nvcc is on PATH. On Windows use the **x64 Developer Command Prompt for Visual Studio**; on Colab use a GPU runtime. |
 | `no CUDA-capable device detected` | Driver or GPU hardware uninitialized. | Confirm device status with `nvidia-smi`. Ensure display driver $\ge 525$ is installed. |
-| `Result shows FAIL` | Incorrect 2D coordinate calculations or omitted block coordinate swap in coalesced write. | Ensure $x = \text{blockIdx.y} \times \text{TILE} + \text{threadIdx.x}$ and $y = \text{blockIdx.x} \times \text{TILE} + \text{threadIdx.y}$ before writing to global memory. |
+| `Result shows FAIL` | Incorrect 2D coordinate calculations or omitted block coordinate swap in coalesced write. | Check index expressions, especially swapped block coordinates in the coalesced kernel and bounds checks. |
 | Negligible Speedup | Matrix size $N$ too small ($N \le 512$). | Small matrices fit in hardware L2 cache ($16\text{ MB}$ on RTX 5060 Ti). Use $N = 4096$ so memory bus traffic dominates. |
 
 ---
 
 ## 🚀 Compilation & Execution Guide
 
-### Prerequisites
-- NVIDIA GPU with CUDA compute capability $\ge 5.0$
-- CUDA Toolkit installed (CUDA 11.x, 12.x, or 13.x)
-- C++ host compiler (`cl.exe` on Windows or `g++`/`clang` on Linux)
+Follow the standard procedure from **Section 4 (Step 6: Compile & Step 7: Run and Record)** of the lab manual:
 
-### Option 1: Automated Windows Build
-Open the **Developer Command Prompt for VS 2022/2026** and run:
-```bat
-build.bat
-```
-Run benchmarks:
-```bat
-run.bat
-```
+### Step 6: Compile
 
-### Option 2: Manual nvcc Compilation
-```bat
-# Windows (Developer Command Prompt)
-nvcc -O2 -o exp6.exe src/exp6.cu
-exp6.exe 4096 1024
+Open the **Developer Command Prompt for Visual Studio** (on Windows) or terminal (Linux / Colab) in the project directory:
+
+```cmd
+# Windows (run from a Developer Command Prompt)
+nvcc -O2 -o exp6.exe exp6.cu
 
 # Linux / Google Colab
-nvcc -O2 -o exp6 src/exp6.cu
-./exp6 4096 1024
+nvcc -O2 -o exp6 exp6.cu
 ```
+
+> **Note on Architecture Flags:** If needed, add `-arch=sm_XX` for your GPU (e.g., `-arch=sm_75` for a Colab T4, `-arch=sm_86` for RTX 30-series, or `-arch=sm_120` for RTX 50-series).
+
+### Step 7: Run and Record
+
+Run the executable directly from the terminal:
+
+```cmd
+# Windows: default sizes (transpose 4096, matmul 1024)
+exp6.exe
+
+# Windows: optional custom sizes (transpose N=2048, matmul N=512)
+exp6.exe 2048 512
+
+# Linux / Google Colab
+./exp6
+./exp6 2048 512
+```
+
+> **Manual Guideline:** Run the program at least **three times** and record the values in the observation table (Section 6). The first run after initializing the GPU device context can be slightly slower; use the repeated values.
 
 ---
 
