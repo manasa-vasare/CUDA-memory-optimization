@@ -201,7 +201,7 @@ The laboratory benchmarks were compiled and evaluated natively on the target hos
 The environment audit confirms native detection of the RTX 5060 Ti, driver version, compiler toolchain, and successful compilation:
 
 <p align="center">
-  <img src="assets/screenshots/setup_terminal.jpeg" alt="Workstation Environment and Toolchain Audit" width="90%">
+  <img src="results/setup_terminal.jpeg" alt="Workstation Environment and Toolchain Audit" width="90%">
   <br>
   <em><b>Figure 1:</b> Developer Command Prompt session verifying <code>nvidia-smi</code> (RTX 5060 Ti, Driver 621.24, CUDA 13.5), <code>nvcc --version</code> (Release 13.5), and compilation of <code>exp6.cu</code>.</em>
 </p>
@@ -217,16 +217,16 @@ CUDA-memory-optimization/
 ├── .gitignore              # Ignores build artifacts (.exe, .obj, bin/)
 ├── docs/
 │   └── Experiment6_CUDA_Memory_Optimization_Manual.pdf  # Official Lab Manual
+├── results/                # Diagnostic and benchmark execution output screenshots
+│   ├── setup_terminal.jpeg   # nvcc, nvidia-smi & compilation
+│   ├── run1_benchmark.jpeg   # Benchmark Run 1 output
+│   ├── run2_benchmark.jpeg   # Benchmark Run 2 output
+│   └── run3_benchmark.jpeg   # Benchmark Run 3 output
 ├── assets/
-│   ├── charts/             # High-resolution benchmark comparison plots
-│   │   ├── transpose_performance_comparison.png
-│   │   ├── multi_run_stability.png
-│   │   └── hardware_comparison_t4_vs_rtx5060ti.png
-│   └── screenshots/        # Diagnostic and execution output logs
-│       ├── setup_terminal.jpeg   # nvcc, nvidia-smi & compilation
-│       ├── run1_benchmark.jpeg   # Benchmark Run 1 output
-│       ├── run2_benchmark.jpeg   # Benchmark Run 2 output
-│       └── run3_benchmark.jpeg   # Benchmark Run 3 output
+│   └── charts/             # High-resolution benchmark comparison plots
+│       ├── transpose_performance_comparison.png
+│       ├── multi_run_stability.png
+│       └── hardware_comparison_t4_vs_rtx5060ti.png
 └── src/
     ├── exp6.cu             # Source file copy
     └── phases/             # Step-by-step modular code breakdown (Steps 1–5)
@@ -331,21 +331,21 @@ As mandated by **Section 4, Step 7** of the laboratory manual, the executable wa
 
 ### Run 1: Primary Experimental Execution
 <p align="center">
-  <img src="assets/screenshots/run1_benchmark.jpeg" alt="Benchmark Run 1 Output" width="85%">
+  <img src="results/run1_benchmark.jpeg" alt="Benchmark Run 1 Output" width="85%">
   <br>
   <em><b>Figure 2:</b> Run 1 console output (Transpose Uncoalesced: 0.797 ms / 168.4 GB/s | Coalesced: 0.417 ms / 322.1 GB/s | Speedup: 1.91x | Matmul: 1.399 ms / 1534.9 GFLOPS).</em>
 </p>
 
 ### Run 2: Multi-Run Stability Verification
 <p align="center">
-  <img src="assets/screenshots/run2_benchmark.jpeg" alt="Benchmark Run 2 Output" width="85%">
+  <img src="results/run2_benchmark.jpeg" alt="Benchmark Run 2 Output" width="85%">
   <br>
   <em><b>Figure 3:</b> Run 2 console output (Transpose Uncoalesced: 0.796 ms / 168.7 GB/s | Coalesced: 0.418 ms / 321.5 GB/s | Speedup: 1.91x | Matmul: 1.400 ms / 1534.1 GFLOPS).</em>
 </p>
 
 ### Run 3: Multi-Run Stability Verification
 <p align="center">
-  <img src="assets/screenshots/run3_benchmark.jpeg" alt="Benchmark Run 3 Output" width="85%">
+  <img src="results/run3_benchmark.jpeg" alt="Benchmark Run 3 Output" width="85%">
   <br>
   <em><b>Figure 4:</b> Run 3 console output (Transpose Uncoalesced: 0.809 ms / 165.8 GB/s | Coalesced: 0.418 ms / 320.8 GB/s | Speedup: 1.93x | Matmul: 1.511 ms / 1421.4 GFLOPS).</em>
 </p>
